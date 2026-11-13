@@ -1,0 +1,57 @@
+@model ProductCsvImporter.Models.ProductListViewModel
+@{
+    ViewData["Title"] = "Каталог товаров";
+}
+
+<section class="page-heading">
+    <div>
+
+        <h1>Каталог товаров</h1>
+        <p class="lead-copy">Товары, загруженные из CSV-файлов. Данные хранятся в памяти приложения.</p>
+    </div>
+    <a class="button button-primary" asp-action="Import">Импортировать CSV</a>
+</section>
+
+<section class="metrics" aria-label="Сводка каталога">
+    <article class="metric-card"><span>Товаров</span><strong>@Model.TotalCount</strong></article>
+    <article class="metric-card"><span>Активных</span><strong>@Model.ActiveCount</strong></article>
+    <article class="metric-card"><span>Стоимость остатков</span><strong>@Model.TotalStockValue.ToString("N2") ₽</strong></article>
+</section>
+
+<section class="content-card">
+    <div class="section-heading"><div><h2>Список товаров</h2><p>Всего записей: @Model.TotalCount</p></div></div>
+    @if (Model.Products.Count == 0)
+    {
+        <div class="empty-state"><h3>Каталог пока пуст</h3><p>Загрузите CSV-файл, чтобы проверить импорт и увидеть товары в таблице.</p><a class="button button-secondary" asp-action="Import">Открыть импорт</a></div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="product-table">
+                <thead><tr><th>Артикул</th><th>Товар и модель</th><th>Бренд</th><th>Гарантия, мес.</th><th>Категория</th><th>Цена</th><th>Остаток</th><th>Статус</th></tr></thead>
+                <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td><span class="sku">@product.Sku</span></td>
+                        <td>
+                            <div class="product-name">@product.Name</div>
+                            @if (product.ModelNumber.Length > 0)
+                            {
+                                <div class="product-description">Модель: @product.ModelNumber</div>
+                            }
+                            <div class="product-description">@product.Description</div>
+                        </td>
+                        <td>@product.Brand</td>
+                        <td class="numeric">@product.WarrantyMonths</td>
+                        <td>@product.CategoryName</td>
+                        <td class="numeric">@product.Price.ToString("N2") @product.Currency</td>
+                        <td class="numeric">@product.Stock</td>
+                        <td><span class="status @(product.IsActive ? "status-active" : "status-inactive")">@(product.IsActive ? "Активен" : "Неактивен")</span></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

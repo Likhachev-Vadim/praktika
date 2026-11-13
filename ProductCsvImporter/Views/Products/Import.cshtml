@@ -1,0 +1,54 @@
+@model ProductCsvImporter.Models.ImportPageViewModel
+@{
+    ViewData["Title"] = "Импорт товаров";
+}
+
+<section class="page-heading">
+    <div><h1>Импорт товаров</h1><p class="lead-copy">Загрузите CSV-файл. Приложение проверит каждую строку и добавит корректные записи в каталог.</p></div>
+    <a class="button button-secondary" asp-action="Index">К каталогу</a>
+</section>
+
+<div class="import-grid">
+    <section class="content-card upload-card">
+        <div class="section-heading"><div><h2>Выберите файл</h2><p>Поддерживается CSV до 2 МБ в кодировке UTF-8.</p></div></div>
+        <form asp-action="Import" method="post" enctype="multipart/form-data" class="upload-form">
+            @Html.AntiForgeryToken()
+            <label class="drop-zone" for="csv-file">
+                <strong>Выберите CSV-файл</strong>
+                <input id="csv-file" type="file" name="File" accept=".csv,text/csv" required />
+            </label>
+            <p class="file-hint">Обязательные столбцы: <code>sku</code>, <code>name</code>, <code>price</code>, <code>stock</code>, <code>brand</code>, <code>warranty_months</code>.</p>
+            <button class="button button-primary" type="submit">Проверить и импортировать</button>
+        </form>
+        @if (!string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <div class="alert alert-error" role="alert">@Model.Message</div>
+        }
+        @if (Model.Result is not null)
+        {
+            <div class="result-panel">
+                <div class="result-heading"><div><span class="eyebrow">Результат обработки</span><h3>Импорт завершён</h3></div><a asp-action="Index">Перейти к каталогу →</a></div>
+                <div class="result-stats"><div><span>Строк обработано</span><strong>@Model.Result.TotalRows</strong></div><div><span>Добавлено</span><strong class="success-text">@Model.Result.ImportedCount</strong></div><div><span>Ошибок</span><strong class="@(Model.Result.ErrorCount > 0 ? "error-text" : "success-text")">@Model.Result.ErrorCount</strong></div></div>
+                @if (Model.Result.Errors.Count > 0)
+                {
+                    <div class="errors-list"><h4>Замечания по строкам</h4><ul>@foreach (var error in Model.Result.Errors){<li><span>Строка @error.RowNumber</span>@error.Message</li>}</ul></div>
+                }
+                else
+                {
+                    <p class="success-note">Все строки обработаны без ошибок.</p>
+                }
+            </div>
+        }
+    </section>
+
+    <aside class="content-card format-card">
+        <h2>Столбцы CSV</h2>
+        <p>Столбцы можно разделять запятыми или точками с запятой. Текстовые значения с разделителем заключайте в двойные кавычки.</p>
+        <div class="schema-list">
+            <div><code>sku</code><span>Артикул · обязательно</span></div><div><code>name</code><span>Название · обязательно</span></div><div><code>price</code><span>Цена больше нуля · обязательно</span></div><div><code>stock</code><span>Целый остаток от нуля · обязательно</span></div>
+            <div><code>brand</code><span>Бренд · обязательно</span></div><div><code>warranty_months</code><span>Целое число от 0 до 60 · обязательно</span></div><div><code>model_number</code><span>Модель · необязательно</span></div>
+            <div><code>description</code><span>Описание · необязательно</span></div><div><code>currency</code><span>Валюта · по умолчанию RUB</span></div><div><code>category_name</code><span>Категория · необязательно</span></div><div><code>image_url</code><span>Ссылка на изображение · необязательно</span></div><div><code>is_active</code><span>true / false · по умолчанию true</span></div>
+        </div>
+        <a class="text-link" href="@Url.Content("~/sample-products.csv")" download>Скачать пример CSV <span>↓</span></a>
+    </aside>
+</div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · Импорт товаров</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a class="brand" asp-controller="Products" asp-action="Index">Импорт товаров</a>
+            <nav aria-label="Основная навигация">
+                <a asp-controller="Products" asp-action="Index">Каталог</a>
+                <a asp-controller="Products" asp-action="Import">Загрузка CSV</a>
+            </nav>
+            <span class="topbar-status">Учебное приложение</span>
+        </div>
+    </header>
+    <main class="container">@RenderBody()</main>
+    <footer class="footer"><span>ПП.02.01 · Интеграция программных модулей</span><span>Учебный проект</span></footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

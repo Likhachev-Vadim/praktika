@@ -1,0 +1,3 @@
+sku,name,price,stock,brand,warranty_months
+SKU-DUP,Первая запись,7990,4,Gorenje,12
+SKU-DUP,Повтор артикула,4290,1,Kitfort,24

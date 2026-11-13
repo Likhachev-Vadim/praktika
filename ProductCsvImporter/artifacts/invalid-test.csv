@@ -1,0 +1,3 @@
+sku,name,price,stock,brand,warranty_months
+BAD-1,Товар с ошибочной ценой,не число,4,Indesit,12
+BAD-2,Товар с отрицательным остатком,120,-1,ATLANT,24

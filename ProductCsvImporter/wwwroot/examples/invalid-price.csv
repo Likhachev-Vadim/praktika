@@ -1,0 +1,2 @@
+sku,name,price,stock,brand,warranty_months
+SKU-ERR,Товар с неверной ценой,не число,2,Indesit,12

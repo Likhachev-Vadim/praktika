@@ -1,0 +1,4 @@
+sku,name,price,stock,brand,warranty_months,model_number
+SKU-201,Товар без бренда,7990,4,,12,Тест-1
+SKU-202,Товар с неверной гарантией,4290,1,Kitfort,61,Тест-2
+SKU-203,Товар с допустимой гарантией,1990,3,Kitfort,60,

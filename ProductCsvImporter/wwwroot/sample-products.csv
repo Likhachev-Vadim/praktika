@@ -1,0 +1,5 @@
+sku,name,description,price,currency,category_name,stock,image_url,is_active,brand,warranty_months,model_number
+SKU-101,Стиральная машина,Фронтальная загрузка 6 кг,34990,RUB,Стирка,4,,true,Indesit,12,BWSE 61051
+SKU-102,Холодильник,Двухкамерная модель,42990,RUB,Холодильники,2,,true,ATLANT,36,ХМ 4024-000
+SKU-103,Микроволновая печь,Камера объёмом 20 л,7990,RUB,Кухонная техника,6,,true,Gorenje,12,MO20E1W
+SKU-104,Электрочайник,Объём 1.7 л,2390,RUB,Кухонная техника,0,,false,Kitfort,0,
